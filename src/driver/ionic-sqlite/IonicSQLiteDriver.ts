@@ -1,5 +1,3 @@
-const win: any = window;
-
 import {Driver} from "../Driver";
 import {ConnectionIsNotSetError} from "../error/ConnectionIsNotSetError";
 import {DriverOptions} from "../DriverOptions";
@@ -14,6 +12,8 @@ import moment from 'moment';
 import { IonicSQLiteQueryRunner } from "./IonicSQLiteQueryRunner";
 import {QueryRunner} from "../../query-runner/QueryRunner";
 import {DriverOptionNotSetError} from "../error/DriverOptionNotSetError";
+
+import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 
 /**
  * Organizes communication with ionic-sqlite DBMS.
@@ -76,7 +76,9 @@ export class IonicSQLiteDriver implements Driver {
      */
     connect(): Promise<void> {
         return new Promise<void>((ok, fail) => {
-            const connection = win.openDatabase(this.options.database, '1.0', this.options.database, 5 * 1024 * 1024);
+            let sqlite = new SQLite();
+            const connection: Promise<SQLiteObject> = sqlite.create({name: String(this.options.database),location: 'default'});
+
             if(!connection)
                 return fail();
 
@@ -275,9 +277,9 @@ export class IonicSQLiteDriver implements Driver {
         // if (!require)
         //     throw new DriverPackageLoadError();
 
-            if(!win.openDatabase) {
-                throw new DriverPackageNotInstalledError("IonicSQLite", "ionic-sqlite");
-            }
+            // if(!win.openDatabase) {
+            //     throw new DriverPackageNotInstalledError("IonicSQLite", "ionic-sqlite");
+            // }
     }
 
 }

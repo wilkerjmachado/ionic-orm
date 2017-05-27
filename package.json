@@ -22,7 +22,10 @@
     "sqlite-orm"
   ],
   "devDependencies": {
+    "@ionic-native/core": "^3.10.3",
+    "@ionic-native/sqlite": "^3.10.3",
     "grunt-contrib-jshint": "^1.0.0",
+    "rxjs": "^5.4.0",
     "typescript": "^2.0.3"
   },
   "dependencies": {

@@ -9,6 +9,7 @@ import {Logger} from "../logger/Logger";
 import {OrmUtils} from "../util/OrmUtils";
 import {CannotDetermineConnectionOptionsError} from "./error/CannotDetermineConnectionOptionsError";
 import {WebSqlDriver} from "../driver/websql/WebSqlDriver";
+import {IonicSQLiteDriver} from "../driver/ionic-sqlite/IonicSQLiteDriver";
 
 /**
  * ConnectionManager is used to store and manage all these different connections.
@@ -345,6 +346,8 @@ export class ConnectionManager {
      */
     protected createDriver(options: DriverOptions, logger: Logger): Driver {
         switch (options.type) {
+            case "ionic-sqlite":
+                return new IonicSQLiteDriver(options, logger);
             case "websql":
                 return new WebSqlDriver(options, logger);
             default:
