@@ -82,7 +82,7 @@ export class IonicSQLiteQueryRunner implements QueryRunner {
             throw new TransactionAlreadyStartedError();
 
         this.databaseConnection.isTransactionActive = true;
-        // await this.query("BEGIN TRANSACTION");
+        await this.query("BEGIN TRANSACTION");
     }
 
     /**
@@ -94,7 +94,7 @@ export class IonicSQLiteQueryRunner implements QueryRunner {
         if (!this.databaseConnection.isTransactionActive)
             throw new TransactionNotStartedError();
 
-        // await this.query("COMMIT");
+        await this.query("COMMIT");
         this.databaseConnection.isTransactionActive = false;
     }
 
@@ -118,6 +118,9 @@ export class IonicSQLiteQueryRunner implements QueryRunner {
         return this.databaseConnection.isTransactionActive;
     }
 
+    /**
+     * Executes a given SQL query.
+     */
     query(query: string, parameters: any[] = []): Promise<any> {
 
         if (this.isReleased)
