@@ -15,6 +15,7 @@ import {PrimaryKeySchema} from "../../schema-builder/schema/PrimaryKeySchema";
 import {QueryRunnerAlreadyReleasedError} from "../../query-runner/error/QueryRunnerAlreadyReleasedError";
 import {NamingStrategyInterface} from "../../naming-strategy/NamingStrategyInterface";
 
+import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 /**
  * Runs queries on a single websql database connection.
  *
@@ -81,7 +82,7 @@ export class IonicSQLiteQueryRunner implements QueryRunner {
             throw new TransactionAlreadyStartedError();
 
         this.databaseConnection.isTransactionActive = true;
-        // await this.query("BEGIN TRANSACTION");
+        await this.query("BEGIN TRANSACTION");
     }
 
     /**
@@ -93,7 +94,7 @@ export class IonicSQLiteQueryRunner implements QueryRunner {
         if (!this.databaseConnection.isTransactionActive)
             throw new TransactionNotStartedError();
 
-        // await this.query("COMMIT");
+        await this.query("COMMIT");
         this.databaseConnection.isTransactionActive = false;
     }
 
@@ -128,24 +129,28 @@ export class IonicSQLiteQueryRunner implements QueryRunner {
         this.logger.logQuery(query, parameters);
         return new Promise<any[]>((ok, fail) => {
             const _this = this;
-            this.databaseConnection.connection.transaction(function (transaction) {
-                transaction.executeSql(query, parameters,
-                function( transaction, result ) {
-                    if(result.rows)
-                    {
-                        let sqlResultSetRowListArray = Object.keys(result.rows).map(key => result.rows[key]);
-                        ok(sqlResultSetRowListArray);
-                    }
-                    else
-                    {
-                        ok(result);
-                    }
-                },
-                function ( transaction, error ) {
-                    _this.logger.logFailedQuery(query, parameters);
-                    _this.logger.logQueryError(error);
-                    fail(error)
-                } )
+            this.databaseConnection.connection.then((db: SQLiteObject) => {
+                db.executeSql(query, parameters)
+                    .then((result) => {
+                        if(result.rows)
+                        {
+                            //let sqlResultSetRowListArray = Object.keys(result.rows).map(key => result.rows[key]);
+                            var sqlResultSetRowListArray: any[] = [];
+                            for (var i = 0; i < result.rows.length; i++) {
+                                sqlResultSetRowListArray.push(result.rows.item(i));
+                            }
+                            ok(sqlResultSetRowListArray);
+                        }
+                        else
+                        {
+                            ok(result);
+                        }
+                    })
+                    .catch((error) => {
+                        _this.logger.logFailedQuery(query, parameters);
+                        _this.logger.logQueryError(error);
+                        fail(error)
+                    });
             });
         });
     }
@@ -167,22 +172,21 @@ export class IonicSQLiteQueryRunner implements QueryRunner {
         return new Promise<any[]>((ok, fail) => {
             const _this = this;
 
-            this.databaseConnection.connection.transaction(function (transaction) {
-                transaction.executeSql(sql, parameters,
-                function( transaction, result ) {
-                    if (generatedColumn)
-                        return ok(result["insertId"]);
-                        //return ok(this["lastID"]);
+            this.databaseConnection.connection.then((db: SQLiteObject) => {
+                db.executeSql(sql, parameters)
+                    .then((result) => {
+                        if (generatedColumn)
+                            return ok(result["insertId"]);
+                            //return ok(this["lastID"]);
 
-                    ok();
-                },
-                function ( transaction, error ) {
-                    _this.logger.logFailedQuery(sql, parameters);
-                    _this.logger.logQueryError(error);
-                    fail(error);
-                } );
+                        ok();
+                    })
+                    .catch((error) => {
+                        _this.logger.logFailedQuery(sql, parameters);
+                        _this.logger.logQueryError(error);
+                        fail(error);
+                    });
             });
-
         });
     }
 
