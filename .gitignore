@@ -1,5 +1,4 @@
 build/
-dist/
 .idea/
 coverage/
 node_modules/
