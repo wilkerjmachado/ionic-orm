@@ -2,7 +2,7 @@
   "name": "ionic-orm-sqlite",
   "description": "Data-mapper ORM for Ionic WebSQL and SQLite",
   "private": false,
-  "version": "0.0.7",
+  "version": "0.0.8",
   "license": "MIT",
   "author": "Brady Liles <bradyliles@outlook.com>",
   "repository": {
