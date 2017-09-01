@@ -1,0 +1,1 @@
+{"version":3,"file":"Alias.js","sourceRoot":"","sources":["../../../../src/query-builder/alias/Alias.ts"],"names":[],"mappings":"AAAA;GACG;AACH,MAAM;IAOF,YAAY,IAAY;QACpB,IAAI,CAAC,IAAI,GAAG,IAAI,CAAC;IACrB,CAAC;IAED,IAAI,SAAS;QACT,MAAM,CAAC,IAAI,CAAC,eAAe,GAAG,GAAG,GAAG,IAAI,CAAC,kBAAkB,CAAC;IAChE,CAAC;CAEJ"}

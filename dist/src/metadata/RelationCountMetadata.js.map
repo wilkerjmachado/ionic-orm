@@ -1,0 +1,1 @@
+{"version":3,"file":"RelationCountMetadata.js","sourceRoot":"","sources":["../../../src/metadata/RelationCountMetadata.ts"],"names":[],"mappings":"AAEA;;GAEG;AACH,MAAM;IAqBF,wEAAwE;IACxE,cAAc;IACd,wEAAwE;IAExE,YAAY,IAA+B;QACvC,IAAI,CAAC,MAAM,GAAG,IAAI,CAAC,MAAM,CAAC;QAC1B,IAAI,CAAC,YAAY,GAAG,IAAI,CAAC,YAAY,CAAC;QACtC,IAAI,CAAC,QAAQ,GAAG,IAAI,CAAC,QAAQ,CAAC;IAClC,CAAC;CAEJ"}

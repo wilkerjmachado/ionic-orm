@@ -1,0 +1,1 @@
+{"version":3,"file":"InsertOperation.js","sourceRoot":"","sources":["../../../../src/persistment/operation/InsertOperation.ts"],"names":[],"mappings":"AACA;GACG;AACH,MAAM;IAIF,YAAmB,MAAuB,EAAE,yCAAyC;QAClE,MAAW,EACX,QAAkC,EAAE,kCAAkC;QACtE,OAAO,IAAI,IAAI,EAAE;QAHjB,WAAM,GAAN,MAAM,CAAiB;QACvB,WAAM,GAAN,MAAM,CAAK;QACX,aAAQ,GAAR,QAAQ,CAA0B;QAClC,SAAI,GAAJ,IAAI,CAAa;IACpC,CAAC;CACJ"}

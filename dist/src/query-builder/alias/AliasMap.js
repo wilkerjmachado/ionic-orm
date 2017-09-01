@@ -1,0 +1,62 @@
+/**
+ */
+export class AliasMap {
+    // -------------------------------------------------------------------------
+    // Constructor
+    // -------------------------------------------------------------------------
+    constructor(entityMetadatas) {
+        this.entityMetadatas = entityMetadatas;
+        // -------------------------------------------------------------------------
+        // Properties
+        // -------------------------------------------------------------------------
+        this.aliases = [];
+    }
+    // -------------------------------------------------------------------------
+    // Public Methods
+    // -------------------------------------------------------------------------
+    addMainAlias(alias) {
+        if (this.hasMainAlias)
+            this.aliases.splice(this.aliases.indexOf(this.mainAlias), 1);
+        alias.isMain = true;
+        this.aliases.push(alias);
+    }
+    addAlias(alias) {
+        this.aliases.push(alias);
+    }
+    get hasMainAlias() {
+        return !!this.aliases.find(alias => alias.isMain);
+    }
+    get mainAlias() {
+        const alias = this.aliases.find(alias => alias.isMain);
+        if (!alias)
+            throw new Error(`Main alias is not set.`);
+        return alias;
+    }
+    findAliasByName(name) {
+        return this.aliases.find(alias => alias.name === name);
+    }
+    findAliasByParent(parentAliasName, parentPropertyName) {
+        return this.aliases.find(alias => {
+            return alias.parentAliasName === parentAliasName && alias.parentPropertyName === parentPropertyName;
+        });
+    }
+    getEntityMetadataByAlias(alias) {
+        if (alias.target) {
+            return this.entityMetadatas.findByTarget(alias.target);
+        }
+        else if (alias.parentAliasName && alias.parentPropertyName) {
+            const parentAlias = this.findAliasByName(alias.parentAliasName);
+            if (!parentAlias)
+                throw new Error(`Alias "${alias.parentAliasName}" was not found`);
+            const parentEntityMetadata = this.getEntityMetadataByAlias(parentAlias);
+            if (!parentEntityMetadata)
+                throw new Error("Cannot get entity metadata for the given alias " + alias.name);
+            if (!parentEntityMetadata.hasRelationWithPropertyName(alias.parentPropertyName))
+                throw new Error("Relation metadata for " + alias.parentAliasName + "#" + alias.parentPropertyName + " was not found.");
+            const relation = parentEntityMetadata.findRelationWithPropertyName(alias.parentPropertyName);
+            return relation.inverseEntityMetadata;
+        }
+        return undefined;
+    }
+}
+//# sourceMappingURL=AliasMap.js.map

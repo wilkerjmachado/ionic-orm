@@ -1,0 +1,1 @@
+{"version":3,"file":"TransactionNotStartedError.js","sourceRoot":"","sources":["../../../../src/driver/error/TransactionNotStartedError.ts"],"names":[],"mappings":"AAAA;;GAEG;AACH,MAAM,iCAAkC,SAAQ,KAAK;IAGjD;QACI,KAAK,EAAE,CAAC;QAHZ,SAAI,GAAG,4BAA4B,CAAC;QAIhC,IAAI,CAAC,OAAO,GAAG,yFAAyF,CAAC;IAC7G,CAAC;CAEJ"}

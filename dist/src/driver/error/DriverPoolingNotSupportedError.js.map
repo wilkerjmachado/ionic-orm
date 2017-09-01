@@ -1,0 +1,1 @@
+{"version":3,"file":"DriverPoolingNotSupportedError.js","sourceRoot":"","sources":["../../../../src/driver/error/DriverPoolingNotSupportedError.ts"],"names":[],"mappings":"AAAA;;GAEG;AACH,MAAM,qCAAsC,SAAQ,KAAK;IAGrD,YAAY,UAAkB;QAC1B,KAAK,EAAE,CAAC;QAHZ,SAAI,GAAG,gCAAgC,CAAC;QAIpC,IAAI,CAAC,OAAO,GAAG,2CAA2C,UAAU,WAAW,CAAC;IACpF,CAAC;CAEJ"}
